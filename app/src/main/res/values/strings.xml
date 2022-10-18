@@ -3,4 +3,10 @@
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">Home Fragment</string>
     <string name="second_fragment_label">Movie Detail Fragment</string>
+    <!-- Strings used in UI -->
+    <string name="latest_movies">Próximos estrenos</string>
+    <string name="trending_movies">Tendencia</string>
+    <string name="recommended_movies">Recomendados para ti</string>
+    <string name="language">&lt;Idioma&gt;</string>
+    <string name="launch_year">&lt;Año lanzamiento&gt;</string>
 </resources>
