@@ -1,4 +1,4 @@
-package com.example.emovie.api
+package com.example.emovie
 
 import android.app.Application
 import com.example.emovie.di.koinModule
