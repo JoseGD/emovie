@@ -1,4 +1,4 @@
-package com.example.emovie
+package com.example.emovie.moviedetail
 
 import android.os.Bundle
 import android.view.LayoutInflater
