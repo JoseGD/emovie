@@ -2,6 +2,7 @@ package com.example.emovie
 
 import android.app.Application
 import com.example.emovie.di.koinModule
+import com.example.emovie.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -17,7 +18,7 @@ class EmovieApplication: Application() {
         startKoin {
             androidLogger()
             androidContext(this@EmovieApplication)
-            modules(koinModule)
+            modules(listOf(koinModule, viewModelModule))
         }
     }
 

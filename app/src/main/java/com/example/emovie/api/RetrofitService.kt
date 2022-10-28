@@ -1,5 +1,6 @@
 package com.example.emovie.api
 
+import com.example.emovie.model.MoviesResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 
@@ -10,6 +11,6 @@ import retrofit2.http.GET
 interface RetrofitService {
 
     @GET("movie/upcoming")
-    fun getUpcomingMovies(): Single<List<String>>  // TODO: Replace with model
+    fun getUpcomingMovies(): Single<MoviesResponse>
 
 }

@@ -9,4 +9,6 @@
     <string name="recommended_movies">Recomendados para ti</string>
     <string name="language">&lt;Idioma&gt;</string>
     <string name="launch_year">&lt;Año lanzamiento&gt;</string>
+    <string name="load_error">Error al cargar datos</string>
+    <string name="movie_poster">Movie poster</string>
 </resources>

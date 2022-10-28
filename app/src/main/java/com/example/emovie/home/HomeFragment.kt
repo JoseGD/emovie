@@ -5,17 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.emovie.R
 import com.example.emovie.databinding.FragmentHomeBinding
+import com.google.android.material.snackbar.Snackbar
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class HomeFragment: Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
-    // This property is only valid between onCreateView and onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var viewModel: HomeViewModel
+    private lateinit var adapter: UpcomingMoviesAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -24,14 +26,30 @@ class HomeFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        binding.buttonFirst.setOnClickListener {
-//            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-//        }
+        viewModel = getViewModel()
+        initViews()
+        bindViewModel()
+        viewModel.loadUpcomingMovies()
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
+    }
+
+    private fun initViews() {
+        binding.rvUpcomingMovies.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    private fun bindViewModel() {
+        viewModel.upcomingMoviesLiveData.observe(viewLifecycleOwner) {
+            adapter = UpcomingMoviesAdapter(it)
+            binding.rvUpcomingMovies.adapter = adapter
+        }
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+            val errorMsg = getString(R.string.load_error) + ": $it"
+            Snackbar.make(binding.root, errorMsg, Snackbar.LENGTH_LONG ).show()
+        }
     }
 
 }
