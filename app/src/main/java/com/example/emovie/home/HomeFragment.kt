@@ -17,7 +17,8 @@ class HomeFragment: Fragment() {
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     private lateinit var viewModel: HomeViewModel
-    private lateinit var adapter: UpcomingMoviesAdapter
+    private lateinit var upcomingMoviesAdapter: MoviesAdapter
+    private lateinit var topRatedMoviesAdapter: MoviesAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -30,6 +31,7 @@ class HomeFragment: Fragment() {
         initViews()
         bindViewModel()
         viewModel.loadUpcomingMovies()
+        viewModel.loadTopRatedMovies()
     }
 
     override fun onDestroyView() {
@@ -39,12 +41,17 @@ class HomeFragment: Fragment() {
 
     private fun initViews() {
         binding.rvUpcomingMovies.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvTopRatedMovies.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun bindViewModel() {
         viewModel.upcomingMoviesLiveData.observe(viewLifecycleOwner) {
-            adapter = UpcomingMoviesAdapter(it)
-            binding.rvUpcomingMovies.adapter = adapter
+            upcomingMoviesAdapter = MoviesAdapter(it)
+            binding.rvUpcomingMovies.adapter = upcomingMoviesAdapter
+        }
+        viewModel.topRatedMoviesLiveData.observe(viewLifecycleOwner) {
+            topRatedMoviesAdapter = MoviesAdapter(it)
+            binding.rvTopRatedMovies.adapter = topRatedMoviesAdapter
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) {
             val errorMsg = getString(R.string.load_error) + ": $it"

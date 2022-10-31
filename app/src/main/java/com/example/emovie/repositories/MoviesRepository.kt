@@ -13,6 +13,7 @@ import org.koin.core.inject
 
 interface MoviesRepository {
     fun getUpcomingMovies(): Single<MoviesResponse>
+    fun getTopRatedMovies(): Single<MoviesResponse>
 }
 
 class MoviesRepositoryImpl: MoviesRepository, KoinComponent {
@@ -22,6 +23,12 @@ class MoviesRepositoryImpl: MoviesRepository, KoinComponent {
     override fun getUpcomingMovies(): Single<MoviesResponse> {
         return retrofitManager.createService()
             .getUpcomingMovies()
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun getTopRatedMovies(): Single<MoviesResponse> {
+        return retrofitManager.createService()
+            .getTopRatedMovies()
             .observeOn(AndroidSchedulers.mainThread())
     }
 

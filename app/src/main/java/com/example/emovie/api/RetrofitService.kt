@@ -13,4 +13,7 @@ interface RetrofitService {
     @GET("movie/upcoming")
     fun getUpcomingMovies(): Single<MoviesResponse>
 
+    @GET("movie/top_rated")
+    fun getTopRatedMovies(): Single<MoviesResponse>
+
 }

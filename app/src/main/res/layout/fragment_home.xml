@@ -40,16 +40,25 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
         <TextView
-            android:id="@+id/tvTrending"
+            android:id="@+id/tvTopRated"
             style="@style/UILabel.Section"
             app:layout_constraintTop_toBottomOf="@id/rvUpcomingMovies"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/trending_movies"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTopRatedMovies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvTopRated"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+
         <TextView
             android:id="@+id/tvRecommended"
             style="@style/UILabel.Section"
-            app:layout_constraintTop_toBottomOf="@id/tvTrending"
+            app:layout_constraintTop_toBottomOf="@id/rvTopRatedMovies"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/recommended_movies"/>
 

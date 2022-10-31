@@ -11,20 +11,20 @@ import com.example.emovie.model.ListedMovie
  * Created by josegonzalezdamico on 23/10/2022
  */
 
-class UpcomingMoviesAdapter(private val upcomingList: List<ListedMovie>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MoviesAdapter(private val upcomingList: List<ListedMovie>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return UpcomingMoviesViewHolder(MovieRowBinding.inflate(inflater, parent, false))
+        return MoviesViewHolder(MovieRowBinding.inflate(inflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as UpcomingMoviesViewHolder).bindData(upcomingList[position])
+        (holder as MoviesViewHolder).bindData(upcomingList[position])
     }
 
     override fun getItemCount() = upcomingList.size
 
-    class UpcomingMoviesViewHolder(private val binding: MovieRowBinding): RecyclerView.ViewHolder(binding.root) {
+    class MoviesViewHolder(private val binding: MovieRowBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bindData(member: ListedMovie) {
             Glide.with(binding.moviePoster)
