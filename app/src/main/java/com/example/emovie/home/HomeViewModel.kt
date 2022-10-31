@@ -16,6 +16,7 @@ class HomeViewModel: ViewModel(), KoinComponent {
 
     val upcomingMoviesLiveData = MutableLiveData<List<ListedMovie>>()
     val topRatedMoviesLiveData = MutableLiveData<List<ListedMovie>>()
+    val recommendedMoviesLiveData = MutableLiveData<List<ListedMovie>>()
     val errorLiveData = MutableLiveData<String>()
 
     private val moviesRepo: MoviesRepository by inject()
@@ -33,6 +34,7 @@ class HomeViewModel: ViewModel(), KoinComponent {
     fun loadTopRatedMovies() {
         moviesRepo.getTopRatedMovies().subscribe({
             topRatedMoviesLiveData.value = it.movieList
+            recommendedMoviesLiveData.value = it.movieList
         }, {
             errorLiveData.value = it.localizedMessage
         })

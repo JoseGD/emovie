@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.emovie.R
 import com.example.emovie.databinding.FragmentHomeBinding
+import com.example.emovie.home.MoviesAdapter.MoviesViewHolder.Companion.RECOMMENDED
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -19,6 +20,7 @@ class HomeFragment: Fragment() {
     private lateinit var viewModel: HomeViewModel
     private lateinit var upcomingMoviesAdapter: MoviesAdapter
     private lateinit var topRatedMoviesAdapter: MoviesAdapter
+    private lateinit var recommendedMoviesAdapter: MoviesAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -52,6 +54,10 @@ class HomeFragment: Fragment() {
         viewModel.topRatedMoviesLiveData.observe(viewLifecycleOwner) {
             topRatedMoviesAdapter = MoviesAdapter(it)
             binding.rvTopRatedMovies.adapter = topRatedMoviesAdapter
+        }
+        viewModel.recommendedMoviesLiveData.observe(viewLifecycleOwner) {
+            recommendedMoviesAdapter = MoviesAdapter(it, RECOMMENDED)
+            binding.rvRecommendedMovies.adapter = recommendedMoviesAdapter
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) {
             val errorMsg = getString(R.string.load_error) + ": $it"
