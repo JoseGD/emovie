@@ -9,5 +9,7 @@ import com.google.gson.annotations.SerializedName
 data class ListedMovie(
     @SerializedName("id") val id: Int? = null,
     @SerializedName("title") val title: String,
-    @SerializedName("poster_path") val posterPath: String
+    @SerializedName("poster_path") val posterPath: String,
+    @SerializedName("original_language") val originalLanguage: String,
+    @SerializedName("release_date") val releaseDate: String
 )

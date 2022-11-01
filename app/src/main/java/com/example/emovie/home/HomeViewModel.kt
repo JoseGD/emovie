@@ -40,4 +40,16 @@ class HomeViewModel: ViewModel(), KoinComponent {
         })
     }
 
+    @SuppressLint("CheckResult")
+    fun filterMoviesByLanguage(lang: String) {
+        // TODO: get this list from cache
+        moviesRepo.getTopRatedMovies().subscribe({
+            recommendedMoviesLiveData.value =
+                if (lang.isEmpty()) it.movieList  // This resets the filter
+                else it.movieList.filter { movie -> movie.originalLanguage == lang }
+        }, {
+            errorLiveData.value = it.localizedMessage
+        })
+    }
+
 }

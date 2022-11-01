@@ -1,9 +1,8 @@
 package com.example.emovie.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.emovie.R
@@ -12,7 +11,7 @@ import com.example.emovie.home.MoviesAdapter.MoviesViewHolder.Companion.RECOMMEN
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-class HomeFragment: Fragment() {
+class HomeFragment: Fragment(), PopupMenu.OnMenuItemClickListener {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
@@ -41,9 +40,16 @@ class HomeFragment: Fragment() {
         super.onDestroyView()
     }
 
+    override fun onMenuItemClick(item: MenuItem): Boolean {
+        binding.tvLanguageLabel.text = item.title
+        viewModel.filterMoviesByLanguage(item.titleCondensed.toString())
+        return true
+    }
+
     private fun initViews() {
         binding.rvUpcomingMovies.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvTopRatedMovies.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.tvLanguageLabel.setOnClickListener { showLanguagesPopup(it) }
     }
 
     private fun bindViewModel() {
@@ -62,6 +68,14 @@ class HomeFragment: Fragment() {
         viewModel.errorLiveData.observe(viewLifecycleOwner) {
             val errorMsg = getString(R.string.load_error) + ": $it"
             Snackbar.make(binding.root, errorMsg, Snackbar.LENGTH_LONG ).show()
+        }
+    }
+
+    private fun showLanguagesPopup(v: View) {
+        PopupMenu(requireContext(), v).apply {
+            setOnMenuItemClickListener(this@HomeFragment)
+            menuInflater.inflate(R.menu.menu_languages, menu)
+            show()
         }
     }
 

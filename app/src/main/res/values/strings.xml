@@ -7,8 +7,17 @@
     <string name="latest_movies">Próximos estrenos</string>
     <string name="trending_movies">Tendencia</string>
     <string name="recommended_movies">Recomendados para ti</string>
-    <string name="language">&lt;Idioma&gt;</string>
-    <string name="launch_year">&lt;Año lanzamiento&gt;</string>
     <string name="load_error">Error al cargar datos</string>
     <string name="movie_poster">Movie poster</string>
+    <!-- Popup menus -->
+    <string name="language">&lt;Idioma&gt;</string>
+    <string name="english">Inglés</string>
+    <string name="spanish">Español</string>
+    <string name="portuguese">Portugués</string>
+    <string name="french">Francés</string>
+    <string name="german">Alemán</string>
+    <string name="japanese">Japonés</string>
+    <string name="korean">Coreano</string>
+    <string name="hindi">Hindi</string>
+    <string name="launch_year">&lt;Año lanzamiento&gt;</string>
 </resources>
