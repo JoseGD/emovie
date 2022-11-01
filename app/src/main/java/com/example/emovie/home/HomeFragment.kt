@@ -1,7 +1,9 @@
 package com.example.emovie.home
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +13,7 @@ import com.example.emovie.home.MoviesAdapter.MoviesViewHolder.Companion.RECOMMEN
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-class HomeFragment: Fragment(), PopupMenu.OnMenuItemClickListener {
+class HomeFragment: Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
@@ -40,16 +42,13 @@ class HomeFragment: Fragment(), PopupMenu.OnMenuItemClickListener {
         super.onDestroyView()
     }
 
-    override fun onMenuItemClick(item: MenuItem): Boolean {
-        binding.tvLanguageLabel.text = item.title
-        viewModel.filterMoviesByLanguage(item.titleCondensed.toString())
-        return true
-    }
-
     private fun initViews() {
-        binding.rvUpcomingMovies.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.rvTopRatedMovies.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.tvLanguageLabel.setOnClickListener { showLanguagesPopup(it) }
+        with (binding) {
+            rvUpcomingMovies.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            rvTopRatedMovies.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            tvLanguageLabel.setOnClickListener { showLanguagesPopup(it) }
+            tvLaunchYearLabel.setOnClickListener { showYearsPopup(it) }
+        }
     }
 
     private fun bindViewModel() {
@@ -73,8 +72,26 @@ class HomeFragment: Fragment(), PopupMenu.OnMenuItemClickListener {
 
     private fun showLanguagesPopup(v: View) {
         PopupMenu(requireContext(), v).apply {
-            setOnMenuItemClickListener(this@HomeFragment)
             menuInflater.inflate(R.menu.menu_languages, menu)
+            setOnMenuItemClickListener { item ->
+                binding.tvLanguageLabel.text = item.title
+                viewModel.filterMoviesByLanguage(item.titleCondensed.toString())
+                true
+            }
+            show()
+        }
+    }
+
+    private fun showYearsPopup(v: View) {
+        PopupMenu(requireContext(), v).apply {
+            for (year in 1970..2022) {
+                menu.add(year.toString())
+            }
+            setOnMenuItemClickListener { item ->
+                binding.tvLaunchYearLabel.text = item.title
+                viewModel.filterMoviesByReleaseYear(item.title.toString())
+                true
+            }
             show()
         }
     }
