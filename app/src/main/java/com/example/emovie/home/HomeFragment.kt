@@ -60,13 +60,21 @@ class HomeFragment: Fragment() {
             topRatedMoviesAdapter = MoviesAdapter(it)
             binding.rvTopRatedMovies.adapter = topRatedMoviesAdapter
         }
-        viewModel.recommendedMoviesLiveData.observe(viewLifecycleOwner) {
-            recommendedMoviesAdapter = MoviesAdapter(it, RECOMMENDED)
-            binding.rvRecommendedMovies.adapter = recommendedMoviesAdapter
+        viewModel.recommendedMoviesLiveData.observe(viewLifecycleOwner) { (list, scroll) ->
+            if (list.isNotEmpty()) {
+                recommendedMoviesAdapter = MoviesAdapter(list, RECOMMENDED)
+                binding.rvRecommendedMovies.adapter = recommendedMoviesAdapter
+                // Scrolling only when reloading recommended list after filtering
+                if (scroll) scrollABit()
+            } else {
+                showErrorMessage(getString(R.string.no_movies_found))
+                resetLanguageFilter()
+                resetYearFilter()
+            }
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) {
             val errorMsg = getString(R.string.load_error) + ": $it"
-            Snackbar.make(binding.root, errorMsg, Snackbar.LENGTH_LONG ).show()
+            showErrorMessage(errorMsg)
         }
     }
 
@@ -75,6 +83,7 @@ class HomeFragment: Fragment() {
             menuInflater.inflate(R.menu.menu_languages, menu)
             setOnMenuItemClickListener { item ->
                 binding.tvLanguageLabel.text = item.title
+                resetYearFilter()
                 viewModel.filterMoviesByLanguage(item.titleCondensed.toString())
                 true
             }
@@ -89,11 +98,33 @@ class HomeFragment: Fragment() {
             }
             setOnMenuItemClickListener { item ->
                 binding.tvLaunchYearLabel.text = item.title
+                resetLanguageFilter()
                 viewModel.filterMoviesByReleaseYear(item.title.toString())
                 true
             }
             show()
         }
+    }
+
+    // TODO use a real animation for this
+    private fun scrollABit() {
+        with (binding.nsvHome) {
+            postDelayed({
+                smoothScrollTo(0, 700)   // Move the screen down a bit to show the effect of filtering results
+            }, 1000)
+        }
+    }
+
+    private fun resetLanguageFilter() {
+        binding.tvLanguageLabel.text = getString(R.string.language)
+    }
+
+    private fun resetYearFilter() {
+        binding.tvLaunchYearLabel.text = getString(R.string.launch_year)
+    }
+
+    private fun showErrorMessage(msg: String) {
+        Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG ).show()
     }
 
 }

@@ -17,7 +17,7 @@ class HomeViewModel: ViewModel(), KoinComponent {
 
     val upcomingMoviesLiveData = MutableLiveData<List<ListedMovie>>()
     val topRatedMoviesLiveData = MutableLiveData<List<ListedMovie>>()
-    val recommendedMoviesLiveData = MutableLiveData<List<ListedMovie>>()
+    val recommendedMoviesLiveData = MutableLiveData<Pair<List<ListedMovie>, Boolean>>() // 2nd param to decide scroll
     val errorLiveData = MutableLiveData<String>()
 
     private val moviesRepo: MoviesRepository by inject()
@@ -33,7 +33,7 @@ class HomeViewModel: ViewModel(), KoinComponent {
     fun loadTopRatedMovies() {
         moviesRepo.getTopRatedMovies().subscribe({
             topRatedMoviesLiveData.value = it.movieList
-            recommendedMoviesLiveData.value = it.movieList
+            recommendedMoviesLiveData.value = it.movieList to false // Filling this list to have it ready for filtering
         }, {
             errorLiveData.value = it.localizedMessage
         })
@@ -43,8 +43,8 @@ class HomeViewModel: ViewModel(), KoinComponent {
         // TODO: get this list from cache
         moviesRepo.getTopRatedMovies().subscribe({
             recommendedMoviesLiveData.value =
-                if (lang.isEmpty()) it.movieList  // This resets the filter
-                else it.movieList.filter { movie -> movie.originalLanguage == lang }
+                (if (lang.isEmpty()) it.movieList  // This resets the filter
+                 else it.movieList.filter { movie -> movie.originalLanguage == lang }) to true
         }, {
             errorLiveData.value = it.localizedMessage
         })
@@ -54,8 +54,8 @@ class HomeViewModel: ViewModel(), KoinComponent {
         // TODO: get this list from cache
         moviesRepo.getTopRatedMovies().subscribe({
             recommendedMoviesLiveData.value =
-                if (year.isEmpty()) it.movieList  // This resets the filter
-                else it.movieList.filter { movie -> movie.releaseDate.startsWith(year) }
+                (if (year.isEmpty()) it.movieList  // This resets the filter
+                 else it.movieList.filter { movie -> movie.releaseDate.startsWith(year) }) to true
         }, {
             errorLiveData.value = it.localizedMessage
         })
