@@ -15,7 +15,7 @@
             android:id="@+id/ivMoviePoster"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:adjustViewBounds="true"
             tools:src="@drawable/fall"
             android:contentDescription="@string/movie_poster" />
@@ -39,31 +39,28 @@
 
             <TextView
                 android:id="@+id/tvReleaseYear"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tvLanguage"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tvLanguage"
                 app:layout_constraintTop_toBottomOf="@id/tvMovieTitle"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 android:layout_marginTop="20dp"
                 style="@style/UILabel.Detail"
                 tools:text="2015" />
 
             <TextView
                 android:id="@+id/tvLanguage"
+                app:layout_constraintStart_toEndOf="@id/tvReleaseYear"
                 app:layout_constraintEnd_toStartOf="@+id/tvVoteAvg"
-                app:layout_constraintStart_toEndOf="@+id/tvReleaseYear"
                 app:layout_constraintTop_toTopOf="@id/tvReleaseYear"
-                app:layout_constraintHorizontal_bias="0.5"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 style="@style/UILabel.Detail"
                 tools:text="en" />
 
             <TextView
                 android:id="@+id/tvVoteAvg"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tvLanguage"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tvReleaseYear"
-                app:layout_constraintHorizontal_bias="0.5"
                 android:layout_marginStart="10dp"
                 style="@style/UILabel.Detail"
                 tools:text="8.0" />
