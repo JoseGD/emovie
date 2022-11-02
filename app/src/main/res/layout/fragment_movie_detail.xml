@@ -33,7 +33,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintVertical_bias="0.6"
                 style="@style/UILabel.Detail"
-                android:textSize="30sp"
+                android:textSize="36sp"
                 android:textStyle="bold"
                 tools:text="Fine movie with a long name" />
 
@@ -44,7 +44,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tvMovieTitle"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 android:layout_marginTop="20dp"
-                style="@style/UILabel.Detail"
+                style="@style/UILabel.Detail.WhiteBG"
                 tools:text="2015" />
 
             <TextView
@@ -53,7 +53,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/tvVoteAvg"
                 app:layout_constraintTop_toTopOf="@id/tvReleaseYear"
                 android:layout_marginStart="10dp"
-                style="@style/UILabel.Detail"
+                style="@style/UILabel.Detail.WhiteBG"
                 tools:text="en" />
 
             <TextView
@@ -62,7 +62,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tvReleaseYear"
                 android:layout_marginStart="10dp"
-                style="@style/UILabel.Detail"
+                style="@style/UILabel.Detail.YellowBG"
                 tools:text="8.0" />
 
             <TextView
@@ -94,7 +94,7 @@
                 android:id="@+id/tvMoviePlotLabel"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnViewTrailer"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 style="@style/UILabel.Detail"
                 android:textStyle="bold"
                 android:text="@string/movie_plot" />

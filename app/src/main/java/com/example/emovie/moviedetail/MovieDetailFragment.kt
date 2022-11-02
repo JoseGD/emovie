@@ -27,7 +27,6 @@ class MovieDetailFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = getViewModel()
-        initViews()
         bindViewModel()
         val args: MovieDetailFragmentArgs by navArgs()
         viewModel.loadMovieDetail(args.movieId)
@@ -36,9 +35,6 @@ class MovieDetailFragment: Fragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
-    }
-
-    private fun initViews() {
     }
 
     private fun bindViewModel() {
@@ -50,7 +46,8 @@ class MovieDetailFragment: Fragment() {
                 tvMovieTitle.text = movie.title
                 tvReleaseYear.text = movie.releaseDate.substring(0,4)
                 tvLanguage.text = movie.language
-                tvVoteAvg.text = movie.voteAvg.toString()
+                val voteText = STAR + movie.voteAvg.toString()
+                tvVoteAvg.text = voteText
                 // genres
                 tvMoviePlot.text = movie.moviePlot
             }
@@ -67,6 +64,7 @@ class MovieDetailFragment: Fragment() {
 
     companion object {
         private const val PATH_PREFIX = "https://image.tmdb.org/t/p/w780"
+        private const val STAR = " ★ "
     }
 
 }
