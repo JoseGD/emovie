@@ -4,26 +4,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/HomeFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/HomeFragment"
+        android:id="@+id/homeFragment"
         android:name="com.example.emovie.home.HomeFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_HomeFragment_to_MovieDetailFragment"
-            app:destination="@id/MovieDetailFragment" />
+            app:destination="@id/movieDetailFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/MovieDetailFragment"
+        android:id="@+id/movieDetailFragment"
         android:name="com.example.emovie.moviedetail.MovieDetailFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_movie_detail">
-        <action
-            android:id="@+id/action_MovieDetailFragment_to_HomeFragment"
-            app:destination="@id/HomeFragment" />
+        <argument
+            android:name="movieId"
+            android:defaultValue="0"
+            app:argType="integer" />
     </fragment>
 
 </navigation>

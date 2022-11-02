@@ -2,6 +2,7 @@ package com.example.emovie.di
 
 import com.example.emovie.api.RetrofitManager
 import com.example.emovie.home.HomeViewModel
+import com.example.emovie.moviedetail.MovieDetailViewModel
 import com.example.emovie.repositories.MoviesRepository
 import com.example.emovie.repositories.MoviesRepositoryImpl
 import com.google.gson.GsonBuilder
@@ -23,4 +24,5 @@ val koinModule = module {
 
 val viewModelModule = module {
     viewModel { HomeViewModel() }
+    viewModel { MovieDetailViewModel() }
 }

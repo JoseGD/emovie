@@ -7,11 +7,114 @@
     android:layout_height="match_parent"
     tools:context=".moviedetail.MovieDetailFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/ivMoviePoster"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            tools:src="@drawable/fall"
+            android:contentDescription="@string/movie_poster" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tvMovieTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.6"
+                style="@style/UILabel.Detail"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                tools:text="Fine movie with a long name" />
+
+            <TextView
+                android:id="@+id/tvReleaseYear"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tvLanguage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvMovieTitle"
+                app:layout_constraintHorizontal_bias="0.5"
+                android:layout_marginTop="20dp"
+                style="@style/UILabel.Detail"
+                tools:text="2015" />
+
+            <TextView
+                android:id="@+id/tvLanguage"
+                app:layout_constraintEnd_toStartOf="@+id/tvVoteAvg"
+                app:layout_constraintStart_toEndOf="@+id/tvReleaseYear"
+                app:layout_constraintTop_toTopOf="@id/tvReleaseYear"
+                app:layout_constraintHorizontal_bias="0.5"
+                android:layout_marginStart="20dp"
+                style="@style/UILabel.Detail"
+                tools:text="en" />
+
+            <TextView
+                android:id="@+id/tvVoteAvg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvLanguage"
+                app:layout_constraintTop_toTopOf="@id/tvReleaseYear"
+                app:layout_constraintHorizontal_bias="0.5"
+                android:layout_marginStart="10dp"
+                style="@style/UILabel.Detail"
+                tools:text="8.0" />
+
+            <TextView
+                android:id="@+id/tvGenres"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvReleaseYear"
+                android:layout_marginTop="10dp"
+                style="@style/UILabel.Detail"
+                tools:text="Comedy * Romance" />
+
+            <Button
+                android:id="@+id/btnViewTrailer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvGenres"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/bg_button"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:text="@string/view_trailer" />
+
+            <TextView
+                android:id="@+id/tvMoviePlotLabel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnViewTrailer"
+                android:layout_marginTop="10dp"
+                style="@style/UILabel.Detail"
+                android:textStyle="bold"
+                android:text="@string/movie_plot" />
+
+            <TextView
+                android:id="@+id/tvMoviePlot"
+                android:layout_width="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvMoviePlotLabel"
+                android:layout_marginTop="10dp"
+                style="@style/UILabel.Detail"
+                android:gravity="start"
+                android:textSize="15sp"
+                tools:text="In a near future, a lonely writer develops an unlikely relationship with an operating system..." />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
 
 </androidx.core.widget.NestedScrollView>

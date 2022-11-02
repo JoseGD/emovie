@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.emovie.R
 import com.example.emovie.databinding.FragmentHomeBinding
 import com.example.emovie.home.MoviesAdapter.MoviesViewHolder.Companion.RECOMMENDED
+import com.example.emovie.model.ListedMovie
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -53,16 +55,22 @@ class HomeFragment: Fragment() {
 
     private fun bindViewModel() {
         viewModel.upcomingMoviesLiveData.observe(viewLifecycleOwner) {
-            upcomingMoviesAdapter = MoviesAdapter(it)
+            upcomingMoviesAdapter = MoviesAdapter(it) { movie ->
+                navigateToDetailScreen(movie)
+            }
             binding.rvUpcomingMovies.adapter = upcomingMoviesAdapter
         }
         viewModel.topRatedMoviesLiveData.observe(viewLifecycleOwner) {
-            topRatedMoviesAdapter = MoviesAdapter(it)
+            topRatedMoviesAdapter = MoviesAdapter(it) { movie ->
+                navigateToDetailScreen(movie)
+            }
             binding.rvTopRatedMovies.adapter = topRatedMoviesAdapter
         }
         viewModel.recommendedMoviesLiveData.observe(viewLifecycleOwner) { (list, scroll) ->
             if (list.isNotEmpty()) {
-                recommendedMoviesAdapter = MoviesAdapter(list, RECOMMENDED)
+                recommendedMoviesAdapter = MoviesAdapter(list, RECOMMENDED) { movie ->
+                    navigateToDetailScreen(movie)
+                }
                 binding.rvRecommendedMovies.adapter = recommendedMoviesAdapter
                 // Scrolling only when reloading recommended list after filtering
                 if (scroll) scrollABit()
@@ -104,6 +112,12 @@ class HomeFragment: Fragment() {
             }
             show()
         }
+    }
+
+    private fun navigateToDetailScreen(movie: ListedMovie) {
+        val action = HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment()
+        action.movieId = movie.id ?: 0
+        findNavController().navigate(action)
     }
 
     // TODO use a real animation for this

@@ -13,7 +13,8 @@ import com.example.emovie.model.ListedMovie
  */
 
 class MoviesAdapter(private val upcomingList: List<ListedMovie>,
-                    private val recommended: Boolean = false): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                    private val recommended: Boolean = false,
+                    private val onItemClicked: (ListedMovie) -> Unit): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -21,7 +22,9 @@ class MoviesAdapter(private val upcomingList: List<ListedMovie>,
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as MoviesViewHolder).bindData(upcomingList[position])
+        (holder as MoviesViewHolder).bindData(upcomingList[position]) {
+            onItemClicked(it)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -32,13 +35,17 @@ class MoviesAdapter(private val upcomingList: List<ListedMovie>,
         }
     }
 
-    class MoviesViewHolder(private val binding: MovieRowBinding, private val big: Boolean = false): RecyclerView.ViewHolder(binding.root) {
+    class MoviesViewHolder(private val binding: MovieRowBinding,
+                           private val big: Boolean = false): RecyclerView.ViewHolder(binding.root) {
 
-        fun bindData(member: ListedMovie) {
+        fun bindData(movie: ListedMovie, onItemClicked: (ListedMovie) -> Unit) {
             val posterPathPrefix = PATH_PREFIX + (if (big) POSTER_SIZE_GRID else POSTER_SIZE_HORIZONTAL)
             Glide.with(binding.moviePoster)
-                .load(posterPathPrefix + member.posterPath)
+                .load(posterPathPrefix + movie.posterPath)
                 .into(binding.moviePoster)
+            itemView.setOnClickListener {
+                onItemClicked(movie)
+            }
         }
 
         companion object {

@@ -10,6 +10,8 @@
     <string name="load_error">Error al cargar datos</string>
     <string name="movie_poster">Poster de la película</string>
     <string name="no_movies_found">No se han encontrado películas</string>
+    <string name="view_trailer">Ver trailer</string>
+    <string name="movie_plot">Trama de la película</string>
     <!-- Popup menus -->
     <string name="language">&lt;Idioma&gt;</string>
     <string name="english">Inglés</string>
