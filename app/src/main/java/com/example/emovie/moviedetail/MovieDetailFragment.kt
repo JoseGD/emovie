@@ -9,6 +9,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.emovie.R
 import com.example.emovie.databinding.FragmentMovieDetailBinding
+import com.example.emovie.model.MovieGenre
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -48,7 +49,7 @@ class MovieDetailFragment: Fragment() {
                 tvLanguage.text = movie.language
                 val voteText = STAR + movie.voteAvg.toString()
                 tvVoteAvg.text = voteText
-                // genres
+                tvGenres.text = makeGenreList(movie.genreList)
                 tvMoviePlot.text = movie.moviePlot
             }
         }
@@ -58,6 +59,14 @@ class MovieDetailFragment: Fragment() {
         }
     }
 
+    private fun makeGenreList(genreList: List<MovieGenre>): String {
+        val genreNames = arrayListOf<String>()
+        for (g in genreList) {
+            genreNames.add(g.name)
+        }
+        return genreNames.joinToString(separator = DOT) { it }
+    }
+
     private fun showErrorMessage(msg: String) {
         Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG ).show()
     }
@@ -65,6 +74,7 @@ class MovieDetailFragment: Fragment() {
     companion object {
         private const val PATH_PREFIX = "https://image.tmdb.org/t/p/w780"
         private const val STAR = " ★ "
+        private const val DOT = " ● "
     }
 
 }
